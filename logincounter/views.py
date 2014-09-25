@@ -11,6 +11,9 @@ class UserForm(forms.Form):
     user = forms.CharField(max_length=MAX_PASSWORD_LENGTH, required=True)
     password = forms.CharField(max_length=MAX_USERNAME_LENGTH)
 
+@csrf_exempt
+def unitTests(request):
+	return JsonResponse({})
 
 @csrf_exempt
 def resetFixture(request):
