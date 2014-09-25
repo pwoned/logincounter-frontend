@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^users/login', 'logincounter.views.login', name='login'),
     url(r'^users/add', 'logincounter.views.add', name='add'),
     url(r'^TESTAPI/resetFixture', 'logincounter.views.resetFixture', name='resetFixture'),
-    url(r'^/TESTAPI/unitTests', 'logincounter.views.unitTests', name='unitTests'),
+    url(r'^TESTAPI/unitTests', 'logincounter.views.unitTests', name='unitTests'),
 )
