@@ -14,14 +14,14 @@ class UserForm(forms.Form):
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		return JsonResponse({})
+		return HttpResponse(json.dumps({}), content_type="application/json")
 
 @csrf_exempt
 def resetFixture(request):
 	if request.method == 'POST':
 		User.objects.all().delete()
-		return JsonResponse({'errCode': User.SUCCESS})
-	return JsonResponse({})
+		return HttpResponse(json.dumps({'errCode': User.SUCCESS}), content_type="application/json")
+	return HttpResponse(json.dumps({}), content_type="application/json")
 	
 @csrf_exempt
 def home(request):
@@ -35,31 +35,31 @@ def login(request):
             try:
                 user = User.objects.get(user=request.POST['user'])
             except User.DoesNotExist as e:
-                return JsonResponse({'errCode': User.ERR_BAD_CREDENTIALS})
+                return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
             
             if user.password == request.POST['password']:
             	user.login_count += 1
             	user.save()
-                return JsonResponse({'errCode': User.SUCCESS, 'count': user.login_count})
+                return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
             else:
-                return JsonResponse({'errCode': User.ERR_BAD_CREDENTIALS})
+                return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
         else:
-            return JsonResponse({'errCode': User.ERR_BAD_CREDENTIALS}) 
-    return JsonResponse({})
+            return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") 
+    return JsonResponse(json.dumps({}))
    
 @csrf_exempt         
 def add(request):
     if request.method == 'POST':
         if len(request.POST['user']) > 0 and len(request.POST['user']) <= User.MAX_USERNAME_LENGTH:
         	if len(request.POST['password']) > User.MAX_PASSWORD_LENGTH:
-        		return JsonResponse({'errCode': User.ERR_BAD_PASSWORD})
+        		return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
         	try:
         		user = User.objects.get(user=request.POST['user'])
-        		return JsonResponse({'errCode': User.ERR_USER_EXISTS})
+        		return HttpResponse(json.dumps({'errCode': User.ERR_USER_EXISTS}), content_type="application/json")
         	except User.DoesNotExist as e:
         		user = User(user=request.POST['user'], password=request.POST['password'])
         		user.save()
-        		return JsonResponse({'errCode': User.SUCCESS, 'count': user.login_count})
+        		return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
         else:
-        	return JsonResponse({'errCode': User.ERR_BAD_USERNAME})
-    #return JsonResponse({}, header)
+        	return HttpResponse(json.dumps({'errCode': User.ERR_BAD_USERNAME}), content_type="application/json")
+    return HttpResponse(json.dumps({}), content_type="application/json")
