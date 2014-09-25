@@ -13,7 +13,8 @@ class UserForm(forms.Form):
 
 @csrf_exempt
 def unitTests(request):
-	return JsonResponse({})
+	if request.method == 'POST':
+		return JsonResponse({})
 
 @csrf_exempt
 def resetFixture(request):
