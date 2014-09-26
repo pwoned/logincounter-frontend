@@ -93,10 +93,10 @@ TEMPLATE_DIRS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd72e09utfhbqi0',                      
-        'USER': 'jekvqrkfosfyps',
-        'PASSWORD': 'VEpS1Q-HCgm9kLlx5E-oOgwsPQ',
-        'HOST': 'ec2-54-197-237-120.compute-1.amazonaws.com',
+        'NAME': 'd3r0u58ugrthio',                      
+        'USER': 'cnykarvojemosh',
+        'PASSWORD': 'G5F6vIygDmxuXcz0l2CgfxwWZD',
+        'HOST': 'ec2-23-23-81-171.compute-1.amazonaws.com',
         'PORT': 5432
     }
 }
