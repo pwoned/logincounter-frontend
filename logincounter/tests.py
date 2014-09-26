@@ -3,6 +3,9 @@ from logincounter.models import User
 import json
 
 class TestUsers(TestCase):
+
+    MAX_LENGTH_INPUT = "abcdefghjiklmnopqrstuvwxyzabcdefghjiklmnopqrstuvwxyzabcdefghjiklmnopqrstuvwxyzabcdefghjiklmnopqrstuvwxyzabcdefghjiklmnopqrstuvwxyz"
+
     def setUp(self):
     	self.client = Client()
         self.user1 = User.objects.create(user="user1", password="password")
@@ -39,32 +42,84 @@ class TestUsers(TestCase):
     	self.assertEquals(200, response.status_code)
     	self.assertEquals(self.user1.password, user1.password)
     	self.assertEquals(User.ERR_USER_EXISTS, result['errCode'])
-   	
-    def testInvalidPassword(self):
-    	response = self.client.post('/users/login/', data = json.dumps({'user': self.user1.user, 'password': 'wrong password'}), content_type="application/json")
-    	result = json.loads(response.content)
-    	
-    	self.assertEquals(200, response.status_code)
-    	self.assertEquals(User.ERR_BAD_CREDENTIALS, result['errCode'])
 		
     def testInvalidUser(self):
     	response = self.client.post('/users/login/', data = json.dumps({'user': 'bad user', 'password': 'wrong password'}), content_type="application/json")
     	result = json.loads(response.content)
     	
+    	try:
+    		bad_user = User.objects.get(user='bad user')
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    	
     	self.assertEquals(200, response.status_code)
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.ERR_BAD_CREDENTIALS, result['errCode']) 	
+   	
+    def testInvalidPassword(self):
+    	response = self.client.post('/users/login/', data = json.dumps({'user': self.user1.user, 'password': 'wrong password'}), content_type="application/json")
+    	result = json.loads(response.content)
+    	
+    	user1 = User.objects.get(user=self.user1.user)
+    	
+    	self.assertEquals(200, response.status_code)
+    	self.assertEquals(self.user1.login_count, user1.login_count)
     	self.assertEquals(User.ERR_BAD_CREDENTIALS, result['errCode'])
+
+    def testBlankUser(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'user': '', 'password': 'wrong password'}), content_type="application/json")
+    	result = json.loads(response.content)
+    	
+    	try:
+    		bad_user = User.objects.get(user='')
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    	
+    	self.assertEquals(200, response.status_code)
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
     	
     def testLongUser(self):
-    	response = self.client.post('/users/login/', data = json.dumps({'user': 'bad user', 'password': 'wrong password'}), content_type="application/json")
+    	response = self.client.post('/users/add/', data = json.dumps({'user': self.MAX_LENGTH_INPUT, 'password': 'wrong password'}), content_type="application/json")
     	result = json.loads(response.content)
     	
+    	try:
+    		bad_user = User.objects.get(user=self.MAX_LENGTH_INPUT)
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    	
     	self.assertEquals(200, response.status_code)
-    	self.assertEquals(User.ERR_BAD_CREDENTIALS, result['errCode'])
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
     	
     def testLongPassword(self):
-    	response = self.client.post('/users/login/', data = json.dumps({'user': 'bad user', 'password': 'wrong password'}), content_type="application/json")
+    	response = self.client.post('/users/add/', data = json.dumps({'user': 'bad user', 'password': self.MAX_LENGTH_INPUT}), content_type="application/json")
     	result = json.loads(response.content)
     	
+    	try:
+    		bad_user = User.objects.get(user='bad user')
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    	
     	self.assertEquals(200, response.status_code)
-    	self.assertEquals(User.ERR_BAD_CREDENTIALS, result['errCode'])
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
+    	
+    def testNoUser(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'password': 'password'}), content_type="application/json")
+    	result = json.loads(response.content)
+    	self.assertEquals(200, response.status_code)
+    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
 	
+    def testNoPassword(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'user': 'user'}), content_type="application/json")
+    	result = json.loads(response.content)
+    	
+    	try:
+    		bad_user = User.objects.get(user='user')
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    	
+    	self.assertEquals(200, response.status_code)
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
