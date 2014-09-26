@@ -69,7 +69,7 @@ import subprocess
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		output = subprocess.check_output("python manage.py test logincounter", shell=True)
+		output = subprocess.check_output("python manage.py test logincounter", shell=True, stderr=subprocess.STDOUT)
 		return HttpResponse(json.dumps({'nrFailed': 3, 'output': output, 'totalTests': 5}), content_type="application/json")
 
 	return HttpResponse(json.dumps({'nrFailed': 3, 'output': '...', 'totalTests': 5}), content_type="application/json")
