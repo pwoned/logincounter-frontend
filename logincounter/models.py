@@ -1,5 +1,4 @@
 from django.db import models
-from django.views.decorators.csrf import csrf_exempt
 
 class User(models.Model):
     ERR_BAD_CREDENTIALS = -1
@@ -16,7 +15,3 @@ class User(models.Model):
             
     def __unicode__(self):
         return self.user
-        
-    @csrf_exempt
-    def dispatch(self, *args, **kwargs):
-        return super(MyView, self).dispatch(*args, **kwargs)
