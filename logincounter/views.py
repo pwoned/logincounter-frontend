@@ -32,13 +32,14 @@ def home(request):
 @csrf_exempt	
 def login(request):
 	if request.method == 'POST':
-		if request.POST.get('user'):
+		data = request.POST.get('data')
+		if data:
 			try:
-				user = User.objects.get(user=request.POST.get('user'))
+				user = User.objects.get(user=data['user'])
 			except User.DoesNotExist as e:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 			
-			if user.password == request.POST.get('password'):
+			if user.password == data['password']:
 				user.login_count += 1
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
@@ -51,14 +52,15 @@ def login(request):
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
-		if request.POST.get('user') and len(request.POST.get('user')) <= User.MAX_USERNAME_LENGTH:
-			if len(request.POST.get('password')) > User.MAX_PASSWORD_LENGTH:
+		data = request.POST.get('data')
+		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
+			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
 			try:
-				user = User.objects.get(user=request.POST.get('user'))
+				user = User.objects.get(user=data['user'])
 				return HttpResponse(json.dumps({'errCode': User.ERR_USER_EXISTS}), content_type="application/json")
 			except User.DoesNotExist as e:
-				user = User(user=request.POST.get('user'), password=request.POST.get('password'))
+				user = User(user=data['user'], password=data['password'])
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 		else:
