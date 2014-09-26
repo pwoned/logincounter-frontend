@@ -7,4 +7,4 @@ class TestUsers(TestCase):
         self.user2 = User.objects.create(user="user2", password="password")   
 
     def testAdd1(self):
-		self.assertEquals(self.user1.login_count, 1)
+		self.assertEquals(self.user1.login_count, 2)
