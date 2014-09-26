@@ -65,5 +65,5 @@ def resetFixture(request):
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		return HttpResponse(json.dumps({}), content_type="application/json")
+		os.system("python manage.py test logincounter > testResults.txt")
 	
