@@ -60,7 +60,7 @@ def add(request):
 				user = User.objects.get(user=data['user'])
 				return HttpResponse(json.dumps({'errCode': User.ERR_USER_EXISTS}), content_type="application/json")
 			except User.DoesNotExist as e:
-				user = User(data['user'], password=data['password'])
+				user = User(user=data['user'], password=data['password'])
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 		else:
