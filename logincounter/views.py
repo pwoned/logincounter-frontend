@@ -70,10 +70,12 @@ import subprocess
 def unitTests(request):
 	if request.method == 'POST':
 		output = subprocess.check_output("python manage.py test logincounter; exit 0", shell=True, stderr=subprocess.STDOUT)
-		output = output.splitlines()
-		for line in output:
+		lines = output.splitlines()
+		for line in lines:
 			if line.startswith("Ran "):
 				totalTests = line.split(" ")[1]
-		return HttpResponse(json.dumps({'nrFailed': 3, 'output': output, 'totalTests': totalTests}), content_type="application/json")
+			else if line.startswith("FAILED (failures="):
+				nrFailed = line.split("=")[1]
+		return HttpResponse(json.dumps({'nrFailed': nrFailed, 'output': output, 'totalTests': totalTests}), content_type="application/json")
 
-	return HttpResponse(json.dumps({'nrFailed': 3, 'output': '...', 'totalTests': 5}), content_type="application/json")
+	return HttpResponse(json.dumps({}), content_type="application/json")
