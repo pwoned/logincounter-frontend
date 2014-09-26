@@ -33,6 +33,7 @@ def home(request):
 def login(request):
 	if request.method == 'POST':
 		data = request.POST.get('data')
+		return HttpResponse(data)
 		if data:
 			data = json.loads(data)
 			try:
@@ -54,7 +55,8 @@ def login(request):
 def add(request):
 	if request.method == 'POST':
 		data = request.POST.get('data')
-		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
+		return HttpResponse(data)
+				if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
 			data = json.loads(data)
 			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
