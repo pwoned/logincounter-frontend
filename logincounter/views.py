@@ -52,15 +52,14 @@ def login(request):
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
-		data = request.body
-		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
-			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
+		if request.body and len(request.body['user']) <= User.MAX_USERNAME_LENGTH:
+			if len(request.body['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
 			try:
-				user = User.objects.get(user=data['user'])
+				user = User.objects.get(user=request.body['user'])
 				return HttpResponse(json.dumps({'errCode': User.ERR_USER_EXISTS}), content_type="application/json")
 			except User.DoesNotExist as e:
-				user = User(data['user'], password=data['password'])
+				user = User(data['user'], password=request.body['password'])
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 		else:
