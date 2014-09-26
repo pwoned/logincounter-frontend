@@ -31,6 +31,8 @@ def home(request):
 
 @csrf_exempt	
 def login(request):
+	return JsonResponse(json.dumps({}))
+	
 """	if request.method == 'POST':
 		if request.POST.get('user'):
 			try:
@@ -46,7 +48,6 @@ def login(request):
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 		else:
 			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") """
-	return JsonResponse(json.dumps({}))
 
 @csrf_exempt      
 def add(request):
