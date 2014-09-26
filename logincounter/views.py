@@ -34,7 +34,7 @@ def login(request):
 	if request.method == 'POST':
 		data = request.POST.get('data')
 		return HttpResponse(data)
-		if data:
+"""		if data:
 			data = json.loads(data)
 			try:
 				user = User.objects.get(user=data['user'])
@@ -48,7 +48,7 @@ def login(request):
 			else:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") 
+			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") """
 	return JsonResponse(json.dumps({}))
 
 @csrf_exempt      
@@ -56,7 +56,7 @@ def add(request):
 	if request.method == 'POST':
 		data = request.POST.get('data')
 		return HttpResponse(data)
-				if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
+"""		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
 			data = json.loads(data)
 			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
@@ -68,5 +68,5 @@ def add(request):
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_USERNAME}), content_type="application/json")
+			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_USERNAME}), content_type="application/json")"""
 	return HttpResponse(json.dumps({}), content_type="application/json")
