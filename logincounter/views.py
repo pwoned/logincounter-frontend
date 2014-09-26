@@ -31,7 +31,7 @@ def home(request):
 
 @csrf_exempt	
 def login(request):
-	return JsonResponse(json.dumps({}))
+	return HttpResponse(json.dumps({}), content_type="application/json")
 	
 """	if request.method == 'POST':
 		if request.POST.get('user'):
