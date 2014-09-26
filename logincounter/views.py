@@ -67,4 +67,4 @@ import os
 def unitTests(request):
 	if request.method == 'POST':
 		os.system("python manage.py test logincounter > testResults.txt")
-	
+	return HttpResponse(json.dumps({'nrFailed': 3, 'output': '...', 'totalTests': 5}), content_type="application/json")
