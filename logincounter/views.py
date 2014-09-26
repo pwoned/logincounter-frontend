@@ -31,7 +31,7 @@ def home(request):
 
 @csrf_exempt	
 def login(request):
-	if request.method == 'POST':
+"""	if request.method == 'POST':
 		if request.POST.get('user'):
 			try:
 				user = User.objects.get(user=request.POST.get('user'))
@@ -45,13 +45,13 @@ def login(request):
 			else:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") 
+			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") """
 	return JsonResponse(json.dumps({}))
 
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
-		data = json.dumps(request.body)
+		data = json.loads(request.body)
 		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
 			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
