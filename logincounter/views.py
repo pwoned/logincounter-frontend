@@ -32,7 +32,7 @@ def home(request):
 @csrf_exempt	
 def login(request):
 	if request.method == 'POST':
-		data = json.loads(request.POST.get('data'))
+		data = request.POST.get('data')
 		if data:
 			data = json.loads(data)
 			try:
