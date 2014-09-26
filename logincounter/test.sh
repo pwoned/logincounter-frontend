@@ -1,1 +1,0 @@
-python manage.py test logincounter > testResults.txt 2>&1
