@@ -66,5 +66,6 @@ import os
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		os.system("python manage.py test logincounter > testResults.txt 2>&1")
+		os.system("python ../manage.py test logincounter > testResults.txt 2>&1")
+		results = open('testResults.txt', 'r')
 	return HttpResponse(json.dumps({'nrFailed': 3, 'output': '...', 'totalTests': 5}), content_type="application/json")
