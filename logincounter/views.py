@@ -52,7 +52,7 @@ def login(request):
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
-		data = json.loads(request.body)
+		data = json.loads(request.body.encode(encoding='UTF-8'))
 		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
 			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
