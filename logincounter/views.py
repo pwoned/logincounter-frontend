@@ -32,41 +32,37 @@ def home(request):
 @csrf_exempt	
 def login(request):
 	if request.method == 'POST':
-		data = request.POST.get('data')
-		return HttpResponse(data)
-"""		if data:
-			data = json.loads(data)
+		return HttpResponse(json.dumps({'errCode': request.POST}), content_type="application/json") 
+		
+"""		if request.POST.get('user'):
 			try:
-				user = User.objects.get(user=data['user'])
+				user = User.objects.get(user=request.POST.get('user'))
 			except User.DoesNotExist as e:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 			
-			if user.password == data['password']:
+			if user.password == request.POST.get('password'):
 				user.login_count += 1
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 			else:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") """
-	return JsonResponse(json.dumps({}))
+			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_CREDENTIALS}), content_type="application/json") 
+	return JsonResponse(json.dumps({}))"""
 
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
-		data = request.POST.get('data')
-		return HttpResponse(data)
-"""		if data and len(data['user']) <= User.MAX_USERNAME_LENGTH:
-			data = json.loads(data)
-			if len(data['password']) > User.MAX_PASSWORD_LENGTH:
+		if request.POST.get('user') and len(request.POST.get('user')) <= User.MAX_USERNAME_LENGTH:
+			if len(request.POST.get('password')) > User.MAX_PASSWORD_LENGTH:
 				return HttpResponse(json.dumps({'errCode': User.ERR_BAD_PASSWORD}), content_type="application/json")
 			try:
-				user = User.objects.get(user=data['user'])
+				user = User.objects.get(user=request.POST.get('user'))
 				return HttpResponse(json.dumps({'errCode': User.ERR_USER_EXISTS}), content_type="application/json")
 			except User.DoesNotExist as e:
-				user = User(user=data['user'], password=data['password'])
+				user = User(user=request.POST.get('user'), password=request.POST.get('password'))
 				user.save()
 				return HttpResponse(json.dumps({'errCode': User.SUCCESS, 'count': user.login_count}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_USERNAME}), content_type="application/json")"""
+			return HttpResponse(json.dumps({'errCode': User.ERR_BAD_USERNAME}), content_type="application/json")
 	return HttpResponse(json.dumps({}), content_type="application/json")
