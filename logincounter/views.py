@@ -62,6 +62,7 @@ def resetFixture(request):
 		return HttpResponse(json.dumps({'errCode': User.SUCCESS}), content_type="application/json")
 	return HttpResponse(json.dumps({}), content_type="application/json")
 	
+import os
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
