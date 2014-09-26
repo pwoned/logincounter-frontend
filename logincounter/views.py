@@ -69,7 +69,7 @@ import subprocess
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		output = subprocess.check_output("python manage.py test logincounter", shell=True, stderr=subprocess.STDOUT)
+		output = subprocess.check_output("python manage.py test logincounter; exit 0", shell=True, stderr=subprocess.STDOUT)
 		output = output.splitlines()
 		for line in output:
 			if line.startswith("Ran "):
