@@ -12,6 +12,13 @@ class User(models.Model):
     user = models.CharField(max_length=MAX_USERNAME_LENGTH, unique=True)
     password = models.CharField(max_length=MAX_PASSWORD_LENGTH, blank=True)
     login_count = models.IntegerField(default=1)
+    
+    def login(self):
+    	login_count += 1
+    	self.save()
+    	
+	def add(self):
+		self.save()
             
     def __unicode__(self):
         return self.user

@@ -89,9 +89,9 @@ TEMPLATE_DIRS = (
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 DATABASES = {}
-DATABASES['default'] =  dj_database_url.config()
+#DATABASES['default'] =  dj_database_url.config()
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'd3r0u58ugrthio',                      
@@ -100,7 +100,7 @@ DATABASES['default'] =  dj_database_url.config()
         'HOST': 'ec2-23-23-81-171.compute-1.amazonaws.com',
         'PORT': 5432
     }
-}"""
+}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

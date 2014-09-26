@@ -39,6 +39,4 @@ class TestAddUser(testLib.RestTestCase):
 
     def testAdd1(self):
         respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-        self.assertResponse(respData, count = 1)
-
-    
+        self.assertResponse(respData)
