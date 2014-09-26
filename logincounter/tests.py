@@ -14,6 +14,7 @@ class TestUsers(TestCase):
 		
     def testLogin(self):
     	response = self.client.post('/users/login/', data = json.dumps({'user': self.user1.user, 'password': self.user1.password}), content_type="application/json")
+    	print response.content
     	self.assertEquals(200, response.status_code)
 		
 	
