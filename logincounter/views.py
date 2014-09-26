@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django import forms
@@ -63,9 +64,12 @@ def resetFixture(request):
 	return HttpResponse(json.dumps({}), content_type="application/json")
 	
 import os
+import subprocess
+ 
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
-		os.system("python ../manage.py test logincounter > testResults.txt 2>&1")
-		results = open('testResults.txt', 'r')
+		output = subprocess.check_output("python manage.py test logincounter", shell=True)
+		return HttpResponse(json.dumps({'nrFailed': 3, 'output': output, 'totalTests': 5}), content_type="application/json")
+
 	return HttpResponse(json.dumps({'nrFailed': 3, 'output': '...', 'totalTests': 5}), content_type="application/json")
