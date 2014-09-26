@@ -58,7 +58,7 @@ class RestTestCase(unittest.TestCase):
         resp = self.conn.getresponse()
         data_string = "<unknown"
         try:
-            if True:
+            if printHeaders:
                 print "  "
                 print "  Request: "+method+" url="+url+" data="+str(data)
                 print "  Request headers: "+str(headers)
