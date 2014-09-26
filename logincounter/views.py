@@ -74,7 +74,7 @@ def unitTests(request):
 		for line in lines:
 			if line.startswith("Ran "):
 				totalTests = line.split(" ")[1]
-			else if line.startswith("FAILED (failures="):
+			elif line.startswith("FAILED (failures="):
 				nrFailed = line.split("=")[1]
 		return HttpResponse(json.dumps({'nrFailed': nrFailed, 'output': output, 'totalTests': totalTests}), content_type="application/json")
 
