@@ -14,7 +14,7 @@ class User(models.Model):
     login_count = models.IntegerField(default=1)
     
     def login(self):
-    	login_count += 1
+    	self.login_count += 1
     	self.save()
     	
 	def add(self):
