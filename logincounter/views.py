@@ -69,6 +69,8 @@ import subprocess
 @csrf_exempt
 def unitTests(request):
 	if request.method == 'POST':
+		nrFailed = 0
+		totalTests = 0
 		output = subprocess.check_output("python manage.py test logincounter; exit 0", shell=True, stderr=subprocess.STDOUT)
 		lines = output.splitlines()
 		for line in lines:
