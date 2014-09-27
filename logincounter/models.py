@@ -1,6 +1,18 @@
 from django.db import models
 
+
 class User(models.Model):
+	MAX_PASSWORD_LENGTH = 128
+	MAX_USERNAME_LENGTH = 128
+
+	user = models.CharField(max_length=MAX_USERNAME_LENGTH, unique=True)
+	password = models.CharField(max_length=MAX_PASSWORD_LENGTH, blank=True)
+	login_count = models.IntegerField(default=1)
+		
+	def __unicode__(self):
+		return self.user
+
+class UsersModel():
 	ERR_BAD_CREDENTIALS = -1
 	ERR_BAD_PASSWORD = -4
 	ERR_BAD_USERNAME = -3
@@ -8,13 +20,8 @@ class User(models.Model):
 	MAX_PASSWORD_LENGTH = 128
 	MAX_USERNAME_LENGTH = 128
 	SUCCESS = 1
-	
-	user = models.CharField(max_length=MAX_USERNAME_LENGTH, unique=True)
-	password = models.CharField(max_length=MAX_PASSWORD_LENGTH, blank=True)
-	login_count = models.IntegerField(default=1)
-	
-	@staticmethod
-	def login(data):
+
+	def login(self, data):
 		if data.get('user') and data.get('password'):
 			try:
 				user = User.objects.get(user=data.get('user'))
@@ -27,9 +34,8 @@ class User(models.Model):
 				return {'errCode': User.SUCCESS, 'count': user.login_count}
 			return {'errCode': User.ERR_BAD_CREDENTIALS}
 		return {}
-		
-	@staticmethod	
-	def add(data):
+
+	def add(self, data):
 		check = User.validate_user(data)
 		if(check == User.SUCCESS):
 			try:
@@ -41,18 +47,13 @@ class User(models.Model):
 				return {'errCode': User.SUCCESS, 'count': user.login_count}
 		return {'errCode': check}
 		
-	@staticmethod
-	def validate_user(data):
+	def validate_user(self, data):
 		if len(data.get('user')) == 0 or len(data.get('user')) > User.MAX_USERNAME_LENGTH:
 			return User.ERR_BAD_USERNAME
 		elif len(data.get('password')) > User.MAX_PASSWORD_LENGTH:
 			return User.ERR_BAD_PASSWORD
 		return User.SUCCESS
-	
-	@staticmethod
-	def resetFixture():
+
+	def resetFixture(self, data):
 		User.objects.all().delete()
 		return {'errCode': User.SUCCESS}
-			
-	def __unicode__(self):
-		return self.user
