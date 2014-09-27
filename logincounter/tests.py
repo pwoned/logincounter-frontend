@@ -123,4 +123,4 @@ class TestUsers(TestCase):
     	
     	self.assertEquals(200, response.status_code)
     	self.assertEquals(None, bad_user)
-    	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
+    	self.assertEquals(User.ERR_BAD_PASSWORD, result.get('errCode'))
