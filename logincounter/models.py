@@ -50,7 +50,7 @@ class User(models.Model):
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
 		elif data.get('user') is None:
-			return user.ERR_BAD_USERNAME
+			return User.ERR_BAD_USERNAME
 		return User.ERR_BAD_PASSWORD
 
 	@classmethod
