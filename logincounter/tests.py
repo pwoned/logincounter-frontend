@@ -90,7 +90,7 @@ class TestUsers(TestCase):
     	
     	self.assertEquals(200, response.status_code)
     	self.assertNotEquals(None, good_user)
-    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
+    	self.assertEquals(User.SUCCESS, result['errCode'])
     	
     def testLongUser(self):
     	response = self.client.post('/users/add/', data = json.dumps({'user': self.MAX_LENGTH_INPUT, 'password': 'wrong password'}), content_type="application/json")
