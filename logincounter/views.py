@@ -2,7 +2,7 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django import forms
-from logincounter.models import User, UsersModel
+from logincounter.models import User
 import json
 from django.views.decorators.csrf import csrf_exempt
 
