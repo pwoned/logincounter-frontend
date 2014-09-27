@@ -68,10 +68,6 @@ class TestAddLoginUser(testLib.RestTestCase):
         respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1' } )
         self.assertResponse(respData, count = None, errCode = self.ERR_BAD_PASSWORD)
 
-    def testAddEmpty(self):
-        respData = self.makeRequest("/users/add", method="POST", data = {} )
-        self.assertResponse(respData, count = None, errCode = self.ERR_BAD_USERNAME)
-
 # If this file is invoked as a Python script, run the tests in this module
 if __name__ == "__main__":
     # Add a verbose argument
