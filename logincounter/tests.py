@@ -128,7 +128,7 @@ class TestUsers(TestCase):
     def testResetFixture(self):
     	response = self.client.post('/users/add/', data = json.dumps({'user': 'user323', 'password': 'password'}), content_type="application/json")
     	result = json.loads(response.content)
-    	User.resetFixture({})
+    	User.resetFixture()
     	try:
     		bad_user = User.objects.get(user='323')
     	except User.DoesNotExist as e:
