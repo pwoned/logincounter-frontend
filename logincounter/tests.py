@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from logincounter.models import User
 from logincounter.views import *
 import json
