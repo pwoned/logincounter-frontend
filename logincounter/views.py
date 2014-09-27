@@ -6,8 +6,6 @@ from logincounter.models import User
 import json
 from django.views.decorators.csrf import csrf_exempt
 
-usersModel = UsersModel()
-
 class UserForm(forms.Form):
 	MAX_PASSWORD_LENGTH = 128
 	MAX_USERNAME_LENGTH = 128
