@@ -43,14 +43,13 @@ class User(models.Model):
 		
 	@classmethod
 	def validate_user(self, data):
-		if data.get('user'):
+		if data.get('user') and data.get('password') is not None:
 			if len(data.get('user')) == 0 or len(data.get('user')) > User.MAX_USERNAME_LENGTH:
 				return User.ERR_BAD_USERNAME
 			elif len(data.get('password')) > User.MAX_PASSWORD_LENGTH:
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
-		else:
-			return User.ERR_BAD_USERNAME
+		return User.ERR_BAD_USERNAME
 
 	@classmethod
 	def resetFixture(self):
