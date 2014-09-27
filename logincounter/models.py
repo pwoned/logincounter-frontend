@@ -52,6 +52,10 @@ class User(models.Model):
 			elif len(data.get('password')) > User.MAX_PASSWORD_LENGTH:
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
+		elif data.get('password') and not data.get('user'):
+			return {'errCode': User.ERR_BAD_USER}
+		else:
+			return {'errCode': User.ERR_BAD_PASSWORD}
 
 	@classmethod
 	def resetFixture(self, data):
