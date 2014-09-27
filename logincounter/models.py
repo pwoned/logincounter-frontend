@@ -58,7 +58,7 @@ class User(models.Model):
 			return User.ERR_BAD_PASSWORD
 
 	@classmethod
-	def resetFixture(self, data):
+	def resetFixture(self):
 		User.objects.all().delete()
 		return {'errCode': User.SUCCESS}
 		
