@@ -24,18 +24,18 @@ def home(request):
 def login(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.encode(encoding='UTF-8'))
-		return HttpResponse(json.dumps(usersModel.login(data)), content_type="application/json")
+		return HttpResponse(json.dumps(User.login(data)), content_type="application/json")
 
 @csrf_exempt      
 def add(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.encode(encoding='UTF-8'))
-		return HttpResponse(json.dumps(usersModel.add(data)), content_type="application/json")
+		return HttpResponse(json.dumps(User.add(data)), content_type="application/json")
 
 @csrf_exempt
 def resetFixture(request):
 	if request.method == 'POST':
-		return HttpResponse(json.dumps(usersModel.resetFixture()), content_type="application/json")
+		return HttpResponse(json.dumps(User.resetFixture()), content_type="application/json")
 	
 import os
 import subprocess

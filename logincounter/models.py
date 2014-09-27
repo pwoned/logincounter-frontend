@@ -1,7 +1,4 @@
 from django.db import models
-		
-	def __unicode__(self):
-		return self.user
 
 class User(models.Model):	
 	ERR_BAD_CREDENTIALS = -1
@@ -16,6 +13,7 @@ class User(models.Model):
 	password = models.CharField(max_length=MAX_PASSWORD_LENGTH, blank=True)
 	login_count = models.IntegerField(default=1)
 
+	@classmethod
 	def login(self, data):
 		if data.get('user') and data.get('password'):
 			try:
@@ -30,6 +28,7 @@ class User(models.Model):
 			return {'errCode': User.ERR_BAD_CREDENTIALS}
 		return {}
 
+	@classmethod
 	def add(self, data):
 		check = User.validate_user(data)
 		if(check == User.SUCCESS):
@@ -42,6 +41,7 @@ class User(models.Model):
 				return {'errCode': User.SUCCESS, 'count': user.login_count}
 		return {'errCode': check}
 		
+	@classmethod
 	def validate_user(self, data):
 		if len(data.get('user')) == 0 or len(data.get('user')) > User.MAX_USERNAME_LENGTH:
 			return User.ERR_BAD_USERNAME
@@ -49,6 +49,10 @@ class User(models.Model):
 			return User.ERR_BAD_PASSWORD
 		return User.SUCCESS
 
+	@classmethod
 	def resetFixture(self, data):
 		User.objects.all().delete()
 		return {'errCode': User.SUCCESS}
+		
+	def __unicode__(self):
+		return self.user
