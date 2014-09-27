@@ -1,7 +1,4 @@
 from django.db import models
-
-
-
 		
 	def __unicode__(self):
 		return self.user
