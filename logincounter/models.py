@@ -43,13 +43,13 @@ class User(models.Model):
 		
 	@classmethod
 	def validate_user(self, data):
-		if data.get('user') and data.get('password'):
+		if data.get('user'):
 			if len(data.get('user')) == 0 or len(data.get('user')) > User.MAX_USERNAME_LENGTH:
 				return User.ERR_BAD_USERNAME
 			elif len(data.get('password')) > User.MAX_PASSWORD_LENGTH:
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
-		elif data.get('user') is None:
+		else:
 			return User.ERR_BAD_USERNAME
 
 	@classmethod
