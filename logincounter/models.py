@@ -27,7 +27,7 @@ class User(models.Model):
 				return {'errCode': User.SUCCESS, 'count': user.login_count}
 			return {'errCode': User.ERR_BAD_CREDENTIALS}
 		elif data.get('password') and not data.get('user'):
-			return {'errCode': User.ERR_BAD_USER}
+			return {'errCode': User.ERR_BAD_USERNAME}
 		else:
 			return {'errCode': User.ERR_BAD_PASSWORD}
 
