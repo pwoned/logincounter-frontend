@@ -26,10 +26,7 @@ class User(models.Model):
 				user.save()
 				return {'errCode': User.SUCCESS, 'count': user.login_count}
 			return {'errCode': User.ERR_BAD_CREDENTIALS}
-		elif data.get('password') and not data.get('user'):
-			return {'errCode': User.ERR_BAD_USERNAME}
-		else:
-			return {'errCode': User.ERR_BAD_PASSWORD}
+		return {'errCode': User.ERR_BAD_CREDENTIALS}
 
 	@classmethod
 	def add(self, data):
