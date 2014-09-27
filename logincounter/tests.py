@@ -124,3 +124,16 @@ class TestUsers(TestCase):
     	self.assertEquals(200, response.status_code)
     	self.assertEquals(None, bad_user)
     	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
+    	
+    def testResetFixture(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'user': 'user323', 'password': 'password'}), content_type="application/json")
+    	User.resetFixture({})
+    	try:
+    		bad_user = User.objects.get(user='323')
+    	except User.DoesNotExist as e:
+    		bad_user = None
+    		
+    	    	
+    	self.assertEquals(200, response.status_code)
+    	self.assertEquals(None, bad_user)
+    	self.assertEquals(User.SUCCESS, result['errCode'])
