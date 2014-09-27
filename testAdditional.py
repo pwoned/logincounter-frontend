@@ -3,6 +3,7 @@
 import testLib
 
 class TestAddLoginUser(testLib.RestTestCase):
+
     """Test adding users"""
     def assertResponse(self, respData, count = 1, errCode = testLib.RestTestCase.SUCCESS):
         """
@@ -34,11 +35,11 @@ class TestAddLoginUser(testLib.RestTestCase):
         self.assertResponse(respData, count = 2)
         
     def testAddDuplicate(self):
-        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : ''} )
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'asd'} )
         self.assertResponse(respData, count = 1, errCode = self.SUCCESS)
-        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : ''} )
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'asd'} )
         self.assertResponse(respData, count = None, errCode = self.ERR_USER_EXISTS)
-        respData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : ''} )
+        respData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'asd'} )
         self.assertResponse(respData, count = 2, errCode = self.SUCCESS)
         
     def testAddBlankUser(self):
