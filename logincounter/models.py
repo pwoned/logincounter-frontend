@@ -49,6 +49,8 @@ class User(models.Model):
 			elif len(data.get('password')) > User.MAX_PASSWORD_LENGTH:
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
+		elif data.get('password') is None:
+			return User.ERR_BAD_PASSWORD
 		return User.ERR_BAD_USERNAME
 
 	@classmethod
