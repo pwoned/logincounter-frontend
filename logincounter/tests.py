@@ -79,6 +79,19 @@ class TestUsers(TestCase):
     	self.assertEquals(None, bad_user)
     	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
     	
+    def testBlankPassword(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'user': 'asdf', 'password': ''}), content_type="application/json")
+    	result = json.loads(response.content)
+    	
+    	try:
+    		good_user = User.objects.get(user='asdf')
+    	except User.DoesNotExist as e:
+    		good_user = None
+    	
+    	self.assertEquals(200, response.status_code)
+    	self.assertNotEquals(None, good_user)
+    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
+    	
     def testLongUser(self):
     	response = self.client.post('/users/add/', data = json.dumps({'user': self.MAX_LENGTH_INPUT, 'password': 'wrong password'}), content_type="application/json")
     	result = json.loads(response.content)
@@ -105,21 +118,16 @@ class TestUsers(TestCase):
     	self.assertEquals(None, bad_user)
     	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
     	
-    def testNoUser(self):
-    	response = self.client.post('/users/add/', data = json.dumps({'password': 'password'}), content_type="application/json")
+    def testResetFixture(self):
+    	response = self.client.post('/users/add/', data = json.dumps({'user': 'user323', 'password': 'password'}), content_type="application/json")
     	result = json.loads(response.content)
-    	self.assertEquals(200, response.status_code)
-    	self.assertEquals(User.ERR_BAD_USERNAME, result['errCode'])
-	
-    def testNoPassword(self):
-    	response = self.client.post('/users/add/', data = json.dumps({'user': 'user'}), content_type="application/json")
-    	result = json.loads(response.content)
-    	
+    	User.resetFixture()
     	try:
-    		bad_user = User.objects.get(user='user')
+    		bad_user = User.objects.get(user='323')
     	except User.DoesNotExist as e:
     		bad_user = None
-    	
+    		
+    	    	
     	self.assertEquals(200, response.status_code)
     	self.assertEquals(None, bad_user)
-    	self.assertEquals(User.ERR_BAD_PASSWORD, result['errCode'])
+    	self.assertEquals(User.SUCCESS, result['errCode'])
