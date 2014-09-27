@@ -53,9 +53,9 @@ class User(models.Model):
 				return User.ERR_BAD_PASSWORD
 			return User.SUCCESS
 		elif data.get('password') and not data.get('user'):
-			return {'errCode': User.ERR_BAD_USERNAME}
+			return User.ERR_BAD_USERNAME
 		else:
-			return {'errCode': User.ERR_BAD_PASSWORD}
+			return User.ERR_BAD_PASSWORD
 
 	@classmethod
 	def resetFixture(self, data):
