@@ -33,19 +33,19 @@ function update(data) {
 		case ERR_BAD_CREDENTIALS:
 			$('#login-message').html('Invalid username and password combination. Please try again.');
 			$('#login-box').attr('class', 'panel panel-danger');
-		break;
+			break;
 		case ERR_BAD_PASSWORD:
 			$('#login-message').html('The password should be at most 128 characters long. Please try again.');
 			$('#login-box').attr('class', 'panel panel-danger');
-		break;
+			break;
 		case ERR_BAD_USERNAME:
 			$('#login-message').html('The username should be non-empty and at most 128 characters long. Please try again.');
 			$('#login-box').attr('class', 'panel panel-danger');
-		break;
+			break;
 		case ERR_USER_EXISTS:
 			$('#login-message').html('This username already exists. Please try again.');
 			$('#login-box').attr('class', 'panel panel-warning');
-		break;
+			break;
 	}
 }
 
