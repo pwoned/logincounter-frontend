@@ -29,6 +29,10 @@ body {
 	text-align: center;
 }
 
+#inputs {
+	padding: 0 16px;
+}
+
 #logout-button, #content {
 	display: none;
 }
