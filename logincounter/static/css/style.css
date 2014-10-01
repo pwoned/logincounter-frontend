@@ -3,22 +3,6 @@ body {
   font-family: 'Helvetica';
 }
 
-.panel-title {
-	font-family: 'Georgia';
-}
-
-#logout-button, #content {
-	display: none;
-}
-
-.buttons, .message, #content {
-	text-align: center;
-}
-
-.buttons button {
-	width: 49%;
-}
-
 #wrapper {
 	position: absolute;
 	top: 50%;
@@ -26,11 +10,27 @@ body {
 	margin-top: -100px;
 }
 
-.form-group .glyphicon {
-	float: left;
-}
-
 #login-box {
 	width: 360px;
 	margin: 0 auto;
+}
+
+#login-message {
+	font-family: 'Georgia';
+}
+
+#login-message, #content, #buttons {
+	text-align: center;
+}
+
+#inputs .glyphicon {
+	float: left;
+}
+
+#logout-button, #content {
+	display: none;
+}
+
+#buttons button {
+	width: 49%;
 }
