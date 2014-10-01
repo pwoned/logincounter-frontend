@@ -53,7 +53,7 @@ function logout() {
 	$('#content').html('').hide();
 	$('#user').val('');
 	$('#password').val('');
-	$('#inputs-input').show();
+	$('#inputs').show();
 	$('#login-button').show();
 	$('#add-button').show();
 	$('#logout-button').hide();
