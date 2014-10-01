@@ -23,8 +23,7 @@ function update(data) {
 		case SUCCESS:
 			$('#login-message').html('Welcome, ' + $('#user').val() + '!');
 			$('#content').html('You have logged in ' + data.count + ' times.').show();
-			$('#user-input').hide();
-			$('#password-input').hide();
+			$('#inputs').hide();
 			$('#login-button').hide();
 			$('#add-button').hide();
 			$('#logout-button').show();
@@ -54,8 +53,7 @@ function logout() {
 	$('#content').html('').hide();
 	$('#user').val('');
 	$('#password').val('');
-	$('#user-input').show();
-	$('#password-input').show();
+	$('#inputs-input').show();
 	$('#login-button').show();
 	$('#add-button').show();
 	$('#logout-button').hide();
