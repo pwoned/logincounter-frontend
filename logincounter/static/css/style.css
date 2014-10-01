@@ -15,7 +15,7 @@ body {
 	margin: 0 auto;
 }
 
-@media screen and (max-width: 500px) {
+@media(max-width: 500px) {
 	#login-box {
 		width: 100%;
 	}
